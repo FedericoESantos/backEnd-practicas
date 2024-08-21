@@ -38,5 +38,9 @@
     "chai": "^5.1.1",
     "mocha": "^10.7.0",
     "supertest": "^7.0.0"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "keywords": []
 }

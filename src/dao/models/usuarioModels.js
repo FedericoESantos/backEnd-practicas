@@ -7,14 +7,19 @@ export const usuarioModel = mongoose.model("usuarios",
         email:{
             type: String, unique:true
         },
-        age:Number,
+        documents:{
+            name: String,
+            reference: String
+        },
+        age: Number,
         password: String,
-        carts: Number, // se toma como atributo el id?
+        carts: Number, 
         rol:{
             type: String, default:"user"
-        }
+        },
+        last_conecction: true,
     },
 {
     timestamps: true, strict: false
-    // strict en false me permite agregar campos que no estan en el esquema
+    
 }))

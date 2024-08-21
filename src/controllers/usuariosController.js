@@ -65,4 +65,21 @@ async function postUser(req,res){
     }
 }
 
-export default {getUsers, postUser, getUserById, getUserByEmail};
+async function postUserDocuments(req,res){
+    // aca va el middleware de multer
+    // para poder recibir documentos que se carguen
+    // y actualizar en el usuario su status para hacer saber que 
+    // se subio algun doc en particular
+
+
+
+
+
+}
+
+async function putUserPremium(req,res){
+    
+
+}
+
+export default {getUsers, postUser, getUserById, getUserByEmail, postUserDocuments, putUserPremium};
