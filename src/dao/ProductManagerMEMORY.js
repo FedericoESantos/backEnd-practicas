@@ -10,9 +10,9 @@ class ProductManager {
         this.products=this.getAll();
     }
 
-    getAll() { // SIRVE PARA LEER ARCHIVOS 
+    getAll() { 
         try {
-            if (fs.existsSync(this.path)) { // si existe la ruta de mi archivo
+            if (fs.existsSync(this.path)) { 
                 return JSON.parse(fs.readFileSync(this.path, { encoding: "utf-8" }));
             }
         } catch (error) {
@@ -32,36 +32,30 @@ class ProductManager {
 
     updateProduct(id, objetoActualizdo){
         let indice = this.products.findIndex(prod=>prod.id === id); 
-        //buscamos en nuestro array todos los productos por su indice
+
         if(indice !== -1){ 
-            //si el indice es diferente de menos 1 extraemos todas las propiedades que tiene 
-            //"objetoActualizado"
+
             const {id, ...resto} = objetoActualizdo; 
-            // creo una constante donde quiero extraer el "id" y el "resto" de las propiedades 
-            //(lo llame resto) en el objeto
             this.products[indice] = {...this.products[indice], ...resto}; 
-            //en la posicion del indice de los productos le exparsa todas las propiedades del id 
-            //y sobreescriba las que ya estan escritas con ...resto
-            // con el {...(nombre)} buscamos todo las propiedades de ese nombre 
-            this.guardarArchivo(); //y aca se guarda el archivo
+            this.guardarArchivo(); 
             loggerDesarrollo.info("El producto se ha actualizado");
         }
     }
 
     deleteProduct(id){
-        let indice = this.products.findIndex(prod=>prod.id === id); // igualamos variable a la busqueda de todos los id de productos
+        let indice = this.products.findIndex(prod=>prod.id === id); 
         if(indice !== -1){ 
-            this.products = this.products.filter(prod=> prod.id !== id); //voy a filtrar todo mi array los id que sean diferentes
-                this.guardarArchivo(); //guardamos el archivo
+            this.products = this.products.filter(prod=> prod.id !== id);
+                this.guardarArchivo(); 
                 loggerDesarrollo.info("Producto Eliminado...");
         }
         return loggerDesarrollo.info("El producto con el ID ${id} no existe");
     }
 
     asignarId(){
-        let id = 1; // por defecto se le asigna 1 al id
-        if(this.products.length>0) // si la longitud de los productos es mayor a 0 ...
-            id = this.products[this.products.length-1].id + 1 // suma 1 a cada id agregado
+        let id = 1; 
+        if(this.products.length>0) 
+            id = this.products[this.products.length-1].id + 1;
         return id;
     }
 
@@ -75,16 +69,15 @@ class ProductManager {
     }
 
     addProduct({id, nombre, alias, superpoder, equipo, energia, status=true}) {
-        let productos = this.products;  //recuper desde el archivo a memoria
-        // y a partir de acá... siempre te manejas con products (en memoria), hasta el fin 
-        // de la función, donde tenes que guardarlo de nuevo en el archivo...
+        let productos = this.products;
+        
         let resultado = "Ocurrio un ERROR";
         if(!id || !nombre || !alias || !superpoder || !equipo  || !energia){
-            return "Todos los parámetros son requeridos"; // si algunos de los parametros son distntos
+            return "Todos los parámetros son requeridos";
         }
         const existe = productos.find(producto=>producto.code == code); 
-        // creo variable que busca un producto cuyo code sea igual al que recibe
-        if(existe){   // si existen devuelve console.log
+        
+        if(existe){
             return loggerDesarrollo.error(`ERROR ... El código ${code} ya se encuentra registrado`);
         }
         ProductManager.idProducto = ProductManager.idProducto +1;

@@ -1,7 +1,5 @@
 import { usuariosService } from "../repository/usuarios.service.js";
 
-// creamos las funciones asincronas de get y post
-
 async function getUsers(req,res){
     try {
         let usuarios = await usuariosService.getUsuarios();

@@ -1,7 +1,7 @@
-const socket = io; // aca conecto el serversocket
+const socket = io; 
 
-socket.on("productos", productos =>{ // aca recibe la peticion del cliente desde app.js
-    const tbody = document.getElementById("productos-tbody"); // llamo al tbody desde su id en realTime...handlebars
+socket.on("productos", productos =>{
+    const tbody = document.getElementById("productos-tbody");
     const prod = productos.productos;
 
     tbody.innerHTML = `
@@ -14,13 +14,11 @@ socket.on("productos", productos =>{ // aca recibe la peticion del cliente desde
     `;
 }); 
 
-//aca configuro el formulario de INICIO
-
 const formulario = document.getElementById("formulario");
 
 formulario.addEventListener("submit", function(e){ 
-    e.preventDefault(); // con esto se posiciona en el primer item
-    // Para obtener los valores del formulario:
+    e.preventDefault(); 
+
     const title = document.getElementById("title").value;
     const description = document.getElementById("description").value;
     const code = document.getElementById("code").value;
@@ -28,8 +26,6 @@ formulario.addEventListener("submit", function(e){
     const stock = document.getElementById("stock").value;
     const category = document.getElementById("category").value;
 
-    // luego me creo un objeto con todas esas variables
-    // Envia el nuevo producto al sevidor a traves de socket
     const producto = {
         title: title,
         description: description,
@@ -39,9 +35,7 @@ formulario.addEventListener("submit", function(e){
         category: category
     }
 
-    // y ahora voy a enviar una peticion al backend (app.js)
     socket.emit("agregarProducto", producto);
-
     
-    formulario.requestFullscreen(); // con esto reseteo el formulario
+    formulario.requestFullscreen(); 
 })

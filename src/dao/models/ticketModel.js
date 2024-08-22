@@ -9,5 +9,5 @@ export const ticketModel = mongoose.model("ticket",
     },
 {
     timestamps: true, strict: false
-    // strict en false me permite agregar campos que no estan en el esquema
+    
 }))

@@ -40,12 +40,12 @@ export const addProductCart = async (req, res) => {
     let { cid, pid } = req.params;
     try {
         const producto = await productManager.getProductBy({_id:pid});
-        if(!producto){ // si no existe el producto
+        if(!producto){ 
             res.setHeader('Content-Type', 'application/json');
             return res.status(400).json({error:`No existe producto con id ${pid}`});
         }
         const carrito = await cartModel.findById(cid);
-        if (!carrito) { // si no existe el carrito
+        if (!carrito) {
             res.setHeader('Content-Type', 'application/json');
             return res.status(400).json({error:`No existe carrito con id ${cid}`});
         }
@@ -71,14 +71,7 @@ export const addProductCart = async (req, res) => {
             }
             )
         }
-        // const productoInCart = carrito.products.find(p => p.id === pid)
-        //         if (productoInCart)
-        //     productoInCart.quantity++
-        // else{
-        //     carrito.products.push({ id: pid, quantity: 1 })
-        // }
-        // carrito.save();
-        // return carrito;
+
     } catch (error) {
         console.log("error en el addProd_to_CartService", error);
         throw error

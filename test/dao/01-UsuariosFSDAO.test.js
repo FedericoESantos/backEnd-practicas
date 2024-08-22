@@ -6,23 +6,23 @@ import { describe, it } from "mocha";
 import { ConnDB } from "../../src/config/ConnDB.js";
 
 const assert = Assert.strict; 
-// el assert sirve para confirmaciones
+
 
 ConnDB.conectar("mongodb+srv://boomarts:CoderCoder123@cluster0.z3sb9mc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", "ecommerce");
 
-// El "describe" es una funcion que nos sirve para describir un entorno de trabajo
+
 describe("Pruebas Dao Usuarios", function(){
     this.timeout(10000)
 
     before(async function(){
         this.dao = new UsuariosFsDAO();
-        // con este this instanciamos la clase UsuariosFSDAO
+        
         await mongoose.connection.collection("usuarios").deleteMany({email:"test2024@test.com"})
     })
 
     afterEach(async function(){
         this.dao = new UsuariosFsDAO();
-        // con este this instanciamos la clase UsuariosFSDAO
+        
         await mongoose.connection.collection("usuarios").deleteMany({email:"test2024@test.com"})
     })
 
@@ -30,7 +30,6 @@ describe("Pruebas Dao Usuarios", function(){
         let resultado = await this.dao.get()
         console.log(resultado);
 
-        // assert.equal significa que va a ser igual y este metodo acepta 2 parametros
         if(assert.equal(Array.isArray(resultado), true) && resultado.length>0){
 
             let usuarioDeshidratado = resultado[0].toJSON();
@@ -51,7 +50,5 @@ describe("Pruebas Dao Usuarios", function(){
         assert.ok(resultado._id);
 
     })
-
-
 
 }); 

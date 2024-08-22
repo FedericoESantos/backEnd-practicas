@@ -1,7 +1,7 @@
 {
-  "name": "desafio14",
+  "name": "E-COMMERCE",
   "version": "1.0.0",
-  "description": "desafio14",
+  "description": "Proyecto Final",
   "main": "./src/app.js",
   "type": "module",
   "scripts": {

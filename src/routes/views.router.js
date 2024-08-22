@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { productModel } from '../dao/models/productModel.js';
 import { ProductManager } from "../dao/ProductManagerDAO.js"
 import { CartManager } from '../dao/CartManagerDAO.js';
-import { auth } from '../middleware/auth.js'; // importo la autenticacion
+import { auth } from '../middleware/auth.js'; 
 import { loggerDesarrollo, loggerProduccion } from '../utils.js';
 
 const productManager = new ProductManager();
@@ -10,7 +10,7 @@ const cartManager = new CartManager();
 
 export const router = Router();
 
-router.get("/productos", async (req, res) => {  // aca me dirige a la pagina de productos
+router.get("/productos", async (req, res) => {  
     let carrito = await cartManager.getOneBy();
     if (!carrito) {
         carrito = await cartManager.create();
@@ -30,8 +30,7 @@ router.get("/productos", async (req, res) => {  // aca me dirige a la pagina de 
     let productos;
     try {
         let { docs: prod, totalPages, hasPrevPage, hasNextPage, prevPage, nextPage } = await productManager.getAllPaginate(1)
-        // le indico la pagina 1
-        // desestructuramos a productos en un objeto
+
         productos = await productManager.getAll();
         res.setHeader('Content-Type', 'text/html');
         return res.render("productos", {
@@ -51,39 +50,39 @@ router.get("/productos", async (req, res) => {  // aca me dirige a la pagina de 
     }
 })
 
-router.get("/", async (req, res) => {  // aca me dirige a la pagina principal
-    const productos = await productModel.find().lean();// con el nombre productos los llamamos desde home.handlebars
+router.get("/", async (req, res) => {  
+    const productos = await productModel.find().lean();
     res.setHeader('Content-Type', 'text/html');
     return res.render("home", { productos, title: "Home Page" });
 })
 
-router.get("/registro", (req, res) => {  // aca me dirige a la pagina de registro
+router.get("/registro", (req, res) => { 
 
     res.setHeader('Content-Type', 'text/html');
     return res.render("registro", { title: "Registro" });
 })
 
-router.get("/login",(req, res) => {  // aca me dirige a la pagina de login
+router.get("/login",(req, res) => {  
 
     res.setHeader('Content-Type', 'text/html');
     return res.render("login", { title: "Login" });
 })
 
-router.get("/perfil", auth, (req, res) => {  // aca me dirige a la pagina de perfil
-    //aca le envio el usuario y la protejo con auth
+router.get("/perfil", auth, (req, res) => {  
+    
     res.render("perfil", {
         title: "My Perfil",
         usuario: req.session.usuario
     })
 })
 
-router.get("/realTimeProducts", async (req, res) => { // aca me dirige a la pagina Real Time Products
-    const productos = await productModel.find().lean(); // con el nombre productos los llamamos desde realtimeproducts.handlebars
+router.get("/realTimeProducts", async (req, res) => { 
+    const productos = await productModel.find().lean(); 
     res.setHeader('Content-Type', 'text/html');
     return res.render("RealTimeProducts", { productos, title: "Real Time Products" });
 });
 
-router.get('/chat', (req, res) => { // aca me dirige a la pagina del chat
+router.get('/chat', (req, res) => { 
     res.setHeader('Content-Type', 'text/html');
     return res.render('chat', { title: "Chat" });
 });

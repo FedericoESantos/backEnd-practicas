@@ -8,18 +8,17 @@ import { config } from "./config.js";
 
 const usuariosManager = new DAO();
 
-//PASO1
-export const initPassport = () => { // aca encapsulamos las estrategias
+export const initPassport = () => { 
     passport.use(
-        "registro",// primer argumento nombre de la estrategia
-        new local.Strategy( // segundo argum. estrategia
-            { // primer argumento un objeto donde envie configuraciones
-                usernameField: "email", //para loguearnos
-                passReqToCallback: true // pasar req al callback
-            }, // segundo argumento una funcion asincrona con try / catch
+        "registro",
+        new local.Strategy( 
+            { 
+                usernameField: "email", 
+                passReqToCallback: true 
+            }, 
             async (req, username, password, done) => {
-                try { // dentro del try va toda la logica de resgistro
-                    let { nombre } = req.body // vamos a llamar al dato de nombre porque el email lo llamamos de userNameField
+                try { 
+                    let { nombre } = req.body 
                     if (!nombre) {
                         return done(null, false);
                     }
@@ -50,16 +49,16 @@ export const initPassport = () => { // aca encapsulamos las estrategias
             async (username, password, done) => {
                 try {
                     let usuario = await usuariosManager.getBy({ email:username });
-                    // si el valor de la propiedad es el mismo se escribe una sola vez
+                    
                     if (!usuario) {
-                        return done(null, false)// en el caso de que no existe error se completa con null
+                        return done(null, false);
                     }
 
                     if (!validaPassword(password, usuario.password)) {
-                        return done(null, false)
+                        return done(null, false);
                     }
 
-                    return done(null, usuario)
+                    return done(null, usuario);
                 } catch (error) {
                     return done(error)
                 }
@@ -71,7 +70,7 @@ export const initPassport = () => { // aca encapsulamos las estrategias
     "github",
     new github.Strategy(
         {
-            clientID:"Iv23liF3iV6vFDAFAFA8", // como lo puedo instanciar con el config.js ???
+            clientID:"Iv23liF3iV6vFDAFAFA8", 
             clientSecret:"e4ba35c0eb298cb4ea3d4f934ed3c64e2468f851",
             callbackURL:""
         },
@@ -93,11 +92,10 @@ export const initPassport = () => { // aca encapsulamos las estrategias
         }
     )
     )
-// PASO 1 BIS - SIEMPRE ES IGUAL
 
     passport.serializeUser((usuario, done) => {
         return done(null, usuario._id)
-    }) // para guardar el usuario
+    }) 
 
     passport.deserializeUser(async (id, done) => {
         let usuario = await usuariosManager.getBy({ _id: id })

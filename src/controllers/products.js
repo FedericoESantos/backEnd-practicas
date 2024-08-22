@@ -1,4 +1,4 @@
-import { request, response } from "express"; // aca exportamos las propiedades del request y responde del express
+import { request, response } from "express"; 
 
 import { isValidObjectId } from 'mongoose';
 import { ProductManager } from "../dao/ProductManagerDAO.js";
@@ -10,9 +10,7 @@ import { CustomError, DatabaseError, NotFoundError, ValidationError } from "../m
 
 const productManager = new ProductManager();
 const req = request;
-const res = response;
 
-// Para llamar a todos los productos
 export const getProducts = async (req, res) => {
 
     try {
@@ -30,11 +28,9 @@ export const getProducts = async (req, res) => {
     }
 }
 
-// Para llamar a todos los productos por su ID de mongo
-
 export const getProductById = async (req, res, next) => {
     let { id } = req.params;
-    if (!isValidObjectId(id)) { // si el objeto Id de la base de datos no es valido
+    if (!isValidObjectId(id)) { 
         return next(new ValidationError(errorMessages.PRODUCT_PRICE_INVALID));
     }
     try {
@@ -52,10 +48,8 @@ export const getProductById = async (req, res, next) => {
     }
 }
 
-// Para crear un producto 
-
 export const addProduct = async (req, res, next) => {
-    let { description, code, price, stock } = req.body; // aca llamamos a todos los items requeridos desde el body
+    let { description, code, price, stock } = req.body;
     if (!description || !code || !price) {
         return next(new ValidationError(errorMessages.PRODUCT_NAME_REQUIRED));
     }
@@ -67,7 +61,7 @@ export const addProduct = async (req, res, next) => {
     }
 
     try {
-        let nuevoProducto = await productManager.createProduct({description, code, price }); // si el stock es undefines me completa con 0
+        let nuevoProducto = await productManager.createProduct({description, code, price }); 
         res.setHeader('Content-Type', 'application/json');
         return res.status(201).json({ nuevoProducto });
     } catch (error) {
@@ -81,12 +75,10 @@ export const addProduct = async (req, res, next) => {
     }
 }
 
-// Para borrar un producto 
-
 export const deleteProduct = async (req, res) => {
-    let { id } = req.params; // llamamos a los productos por su id
+    let { id } = req.params;
     try {
-        let resultado = await productManager.deleteProduct(id); // borra a los productos por su id
+        let resultado = await productManager.deleteProduct(id);
         if (resultado) {
             res.setHeader('Content-Type', 'application/json');
             return res.status(200).json({ resultado });
@@ -96,12 +88,10 @@ export const deleteProduct = async (req, res) => {
     }
 }
 
-// Para borrar un producto 
-
 export const updateProduct = async (req, res) => {
     try {
-        let { pid } = req.params; // aca llama a cualquier parametro luego del endpoint
-        let { id, ...rest } = req.body; // aca llaman a todos lo que venga del body
+        let { pid } = req.params;
+        let { id, ...rest } = req.body;
         let producto = await productManager.updateProduct(pid, { ...rest }, { new: true });
         res.setHeader('Content-Type', 'application/json');
         return res.status(200).json({ producto });
@@ -113,7 +103,6 @@ export const updateProduct = async (req, res) => {
 
 export const getSortProducts = async (req, res) => {
     try {
-        // Realiza la consulta a la base de datos para obtener los productos ordenados
         const productos = await productManager.getSortProduct({}).sort({}).exec();
         return productos;
     } catch (error) {

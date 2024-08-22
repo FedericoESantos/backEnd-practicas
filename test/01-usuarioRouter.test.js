@@ -6,8 +6,6 @@ import mongoose, { isValidObjectId } from "mongoose";
 import fs from "fs";
 
 const requester = supertest("http://localhost:8000");
-// supertest nos permite lanzar peticiones hacia un sitio web 
-// mientras que chai nos permite hacer afirmaciones mediante expect
 
 let { body, status, ok, headers } = await requester.get("/api/usuarios");
 console.log(body);
@@ -58,7 +56,7 @@ describe("Prueba proyecto Ecommerce", function(){
                                             .field("name", mockPet.name)
                                             .field("especie", mockPet.especie)
                                             .field("birthDate", mockPet.birthdate)
-                                            .attach("image", "./test/1.jpeg") // aca va la ruta a la imagen
+                                            .attach("image", "./test/1.jpeg") 
             expect(body.status).to.be.equal("sucess")
             expect(isValidObjectId(body.payload._id)).to.be.true
             expect(fs.existsSync(body.payload.image)).to.be.true
