@@ -17,7 +17,7 @@ export const usuarioModel = mongoose.model("usuarios",
         rol:{
             type: String, default:"user"
         },
-        last_conecction: true,
+        last_conecction: String,
     },
 {
     timestamps: true, strict: false
