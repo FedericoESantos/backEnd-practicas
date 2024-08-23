@@ -28,6 +28,7 @@ import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUI from "swagger-ui-express";
 
 import cluster from "cluster";
+import { upload } from "./multer.js";
 
 if (cluster.isPrimary) {
     cluster.fork();
